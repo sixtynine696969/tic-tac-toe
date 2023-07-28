@@ -1,0 +1,29 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.board {
+    width: 500px;
+    height: 500px;
+
+    display: grid;
+    grid-template: repeat(3, 1fr) / repeat(3, 1fr);
+    gap: 10px;
+
+    background-color: black;
+}
+
+.square {
+    background-color: white;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+    background-repeat: no-repeat;
+    background-color: white;
+    background-size: 80%;
+    background-position: center;
+}
