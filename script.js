@@ -54,6 +54,15 @@ const gameController = function() {
         return wonFlag ? wonFlag : false;
     }
 
+    getWinningCombo = (mark) => {
+        const board = gameBoard.getBoard();
+        let winningCombo;
+        gameBoard.getWinningCombos().forEach(i=> {
+            if (board[i[0]] === mark && board[i[1]] === mark && board[i[2]] === mark) winningCombo = i;
+        })
+        return winningCombo
+    }
+
     incrementNumOfMoves = () => numberOfMoves++;
     hasTied = () => numberOfMoves === 9;
 
@@ -70,7 +79,7 @@ const gameController = function() {
     };
 
     return { getCurrentPlayer, addMark, clearBoard, hasPlayerWon, changeCurrentPlayer,
-    incrementNumOfMoves, hasTied, arePlayersSet, changeStartingPlayer }
+    incrementNumOfMoves, hasTied, arePlayersSet, changeStartingPlayer, getWinningCombo }
 }();
 
 const displayController = function() {
@@ -118,6 +127,15 @@ const displayController = function() {
         restartBtn.removeEventListener('click', handleSquareSelect);
     }
 
+    darkenWinningFileds = (winningCombo) => {
+        squares.forEach(square => {
+            const squareIndex = square.getAttribute('data-board-index');
+            if (winningCombo.includes(+squareIndex)) {
+                square.style['background-color'] = '#9fd3c7';
+            }
+        })
+    }
+
     function handleSquareSelect() {
         if (this.style['background-image']) return;
 
@@ -140,6 +158,9 @@ const displayController = function() {
         }
 
         if (gameController.hasPlayerWon(playerMark)) {
+            const winningCombo = gameController.getWinningCombo(playerMark);
+            darkenWinningFileds(winningCombo);
+
             removeEventsForDrawing();
             announceWinner(playerMark);
             displayRestartBtn();
