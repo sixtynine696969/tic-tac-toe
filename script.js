@@ -30,6 +30,7 @@ const gameController = function() {
     let players = [new Player('joe', 'x'), new Player('josh', 'o')];
     let currentPlayer = players[0];
     let arePlayersSet = true
+    let numberOfMoves = 0;
 
     addMark = (index, mark) => {
         gameBoard.addMark(index, mark);
@@ -39,6 +40,7 @@ const gameController = function() {
     clearBoard = () => {
         gameBoard.clear()
         displayController.clearDisplay();
+        numberOfMoves = 0;
     }
 
     hasPlayerWon = (mark) => {
@@ -51,15 +53,34 @@ const gameController = function() {
         return wonFlag ? wonFlag : false;
     }
 
+    incrementNumOfMoves = () => numberOfMoves++;
+    hasTied = () => numberOfMoves === 9;
+
     changeCurrentPlayer = () => currentPlayer = (currentPlayer === players[0]) ? players[1] : players[0];
 
     getCurrentPlayer = () => currentPlayer;
 
-    return { arePlayersSet, getCurrentPlayer, addMark, clearBoard, hasPlayerWon, changeCurrentPlayer }
+    return { arePlayersSet, getCurrentPlayer, addMark, clearBoard, hasPlayerWon, changeCurrentPlayer,
+    incrementNumOfMoves, hasTied }
 }();
 
 const displayController = function() {
     const squares = document.querySelectorAll('.square');
+    const output = document.querySelector('.output');
+    const restartBtn = document.querySelector('.restart button');
+
+    updateTurn = () => {
+        output.textContent = `Player ${gameController.getCurrentPlayer().getMark().toUpperCase()}'s turn!`
+    }
+
+    announceTie = () => {
+        output.textContent = `Tie!`;
+    }
+
+    announceWinner = (mark) => {
+        const output = document.querySelector('.output');
+        output.textContent = `Player ${mark.toUpperCase()} has won!`;
+    } 
 
     drawMark = (index, mark) => {
         const square = document.querySelector(`.square[data-board-index="${index}"`)
@@ -74,6 +95,25 @@ const displayController = function() {
         })
     }
 
+    handleRestartBtn = () => {
+        gameController.clearBoard();
+        addEventsForDrawing();
+        hideRestartBtn();
+    }
+
+
+    displayRestartBtn = () => {
+        restartBtn.style['visibility'] = 'visible';
+
+        restartBtn.addEventListener('click', handleRestartBtn);
+    }
+
+    hideRestartBtn = () => {
+        restartBtn.style['visibility'] = 'hidden';
+
+        restartBtn.removeEventListener('click', handleSquareSelect);
+    }
+
     function handleSquareSelect() {
         if (this.style['background-image']) return;
 
@@ -85,9 +125,19 @@ const displayController = function() {
         gameController.addMark(index, playerMark);
         gameController.changeCurrentPlayer();
 
+        gameController.incrementNumOfMoves();
+
+        updateTurn();
+
+        if (gameController.hasTied()) {
+            announceTie();
+            displayRestartBtn()
+        }
+
         if (gameController.hasPlayerWon(playerMark)) {
-            console.log('won');
             removeEventsForDrawing();
+            announceWinner(playerMark);
+            displayRestartBtn();
         }
     }
 
@@ -98,6 +148,7 @@ const displayController = function() {
     }
 
     addEventsForDrawing = () => {
+        updateTurn();
         if (!gameController.arePlayersSet) return
 
         const squares = document.querySelectorAll('.square');
