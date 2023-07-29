@@ -63,14 +63,14 @@ const gameController = function() {
 
     arePlayersSet = () => playersSet;
 
-    changePlayerStartingTurn = () => {
+    changeStartingPlayer = () => {
         const player = (startingPlayer === players[0]) ? players[1] : players[0];
         currentPlayer = player;
         startingPlayer = player;
     };
 
     return { getCurrentPlayer, addMark, clearBoard, hasPlayerWon, changeCurrentPlayer,
-    incrementNumOfMoves, hasTied, arePlayersSet, changePlayerStartingTurn }
+    incrementNumOfMoves, hasTied, arePlayersSet, changeStartingPlayer }
 }();
 
 const displayController = function() {
@@ -141,14 +141,14 @@ const displayController = function() {
         if (gameController.hasTied()) {
             announceTie();
             displayRestartBtn()
-            gameController.changePlayerStartingTurn();
+            gameController.changeStartingPlayer();
         }
 
         if (gameController.hasPlayerWon(playerMark)) {
             removeEventsForDrawing();
             announceWinner(playerMark);
             displayRestartBtn();
-            gameController.changePlayerStartingTurn();
+            gameController.changeStartingPlayer();
         }
     }
 
