@@ -5,7 +5,9 @@
 }
 
 :root {
-    --background-color: #ececec;
+    --white: #ececec;
+    --light-blue: #385170;
+    --dark-blue: #142d4c;
 }
 
 * {
@@ -13,7 +15,7 @@
 }
 
 body {
-    background-color: var(--background-color);
+    background-color: var(--white);
     height: 100vh;
 
     display: grid;
@@ -23,9 +25,9 @@ body {
 }
 
 .header {
-    background-color: #385170;
-    color: #ececec;
-    border-bottom: 3px solid #142d4c;
+    background-color: var(--light-blue);
+    color: var(--white);
+    border-bottom: 3px solid var(--dark-blue);
 
     font-size: 3rem;
     text-align: center;
@@ -69,7 +71,7 @@ body {
     align-items: center;
     
     background-repeat: no-repeat;
-    background-color: var(--background-color);
+    background-color: var(--white);
     background-size: 80%;
     background-position: center;
 }
@@ -101,8 +103,8 @@ body {
 .restart button {
     padding: 10px 20px;
     font-size: 1.5rem;
-    color: #ececec;
-    background-color: #385170;
+    color: var(--white);
+    background-color: var(--light-blue);
     border-radius: 10px;
     visibility: hidden;
 }
@@ -116,6 +118,6 @@ body {
     justify-content: center;
     align-items: center;
 
-    background-color: #385170;
-    color: #ececec;
+    background-color: var(--light-blue);
+    color: var(--white);
 }
