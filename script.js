@@ -110,13 +110,11 @@ const displayController = function() {
 
     displayRestartBtn = () => {
         restartBtn.style['visibility'] = 'visible';
-
         restartBtn.addEventListener('click', handleRestartBtn);
     }
 
     hideRestartBtn = () => {
         restartBtn.style['visibility'] = 'hidden';
-
         restartBtn.removeEventListener('click', handleSquareSelect);
     }
 
