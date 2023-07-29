@@ -4,7 +4,54 @@
     box-sizing: border-box;
 }
 
+:root {
+    --background-color: #ececec;
+}
+
+* {
+    font-family: monospace;
+}
+
+body {
+    background-color: var(--background-color);
+    height: 100vh;
+
+    display: grid;
+    grid-template-rows: max-content 2fr 50px 1fr max-content 1fr 50px 2fr max-content;
+
+    align-items: center;
+}
+
+.header {
+    background-color: #385170;
+    color: #ececec;
+    border-bottom: 3px solid #142d4c;
+
+    font-size: 3rem;
+    text-align: center;
+    
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    padding: 10px;
+    grid-row: 1 / 2;
+}
+
+.output {
+    grid-row: 3 / 4;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    font-size: 2rem;
+}
+
 .board {
+    grid-row: 5 / 6;
+    justify-self: center;
+
     width: 500px;
     height: 500px;
 
@@ -16,14 +63,42 @@
 }
 
 .square {
-    background-color: white;
-
     display: flex;
     justify-content: center;
     align-items: center;
     
     background-repeat: no-repeat;
-    background-color: white;
+    background-color: var(--background-color);
     background-size: 80%;
     background-position: center;
+}
+
+.restart {
+    grid-row: 7 / 8;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.restart button {
+    padding: 10px 20px;
+    font-size: 1.5rem;
+    color: #ececec;
+    background-color: #385170;
+    border-radius: 10px;
+    visibility: hidden;
+}
+
+.footer {
+    grid-row: 9 / 10;
+    font-size: 1.3rem;
+    padding: 10px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    background-color: #385170;
+    color: #ececec;
 }
