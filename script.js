@@ -127,11 +127,11 @@ const displayController = function() {
         const playerMark = currentPlayer.getMark();
 
         gameController.addMark(index, playerMark);
+        
         gameController.changeCurrentPlayer();
+        updateTurn();
 
         gameController.incrementNumOfMoves();
-
-        updateTurn();
 
         if (gameController.hasTied()) {
             announceTie();
