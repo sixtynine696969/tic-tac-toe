@@ -27,7 +27,7 @@ const Player = function(name, mark) {
 }
 
 const gameController = function() {
-    let players = [new Player('joe', 'x'), new Player('josh', 'o')];
+    let players = [new Player('dummy', 'x'), new Player('dummy', 'o')];
     let startingPlayer = players[0];
     let currentPlayer = players[0];
     let playersSet = true
@@ -128,7 +128,7 @@ const displayController = function() {
 
         const index = this.getAttribute('data-board-index');
         const currentPlayer = gameController.getCurrentPlayer();
-        const playerName = currentPlayer.getName();
+        // const playerName = currentPlayer.getName();
         const playerMark = currentPlayer.getMark();
 
         gameController.addMark(index, playerMark);
