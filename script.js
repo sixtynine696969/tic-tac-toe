@@ -28,8 +28,9 @@ const Player = function(name, mark) {
 
 const gameController = function() {
     let players = [new Player('joe', 'x'), new Player('josh', 'o')];
+    let startingPlayer = players[0];
     let currentPlayer = players[0];
-    let arePlayersSet = true
+    let playersSet = true
     let numberOfMoves = 0;
 
     addMark = (index, mark) => {
@@ -60,8 +61,16 @@ const gameController = function() {
 
     getCurrentPlayer = () => currentPlayer;
 
-    return { arePlayersSet, getCurrentPlayer, addMark, clearBoard, hasPlayerWon, changeCurrentPlayer,
-    incrementNumOfMoves, hasTied }
+    arePlayersSet = () => playersSet;
+
+    changePlayerStartingTurn = () => {
+        const player = (startingPlayer === players[0]) ? players[1] : players[0];
+        currentPlayer = player;
+        startingPlayer = player;
+    };
+
+    return { getCurrentPlayer, addMark, clearBoard, hasPlayerWon, changeCurrentPlayer,
+    incrementNumOfMoves, hasTied, arePlayersSet, changePlayerStartingTurn }
 }();
 
 const displayController = function() {
@@ -132,12 +141,14 @@ const displayController = function() {
         if (gameController.hasTied()) {
             announceTie();
             displayRestartBtn()
+            gameController.changePlayerStartingTurn();
         }
 
         if (gameController.hasPlayerWon(playerMark)) {
             removeEventsForDrawing();
             announceWinner(playerMark);
             displayRestartBtn();
+            gameController.changePlayerStartingTurn();
         }
     }
 
@@ -149,7 +160,7 @@ const displayController = function() {
 
     addEventsForDrawing = () => {
         updateTurn();
-        if (!gameController.arePlayersSet) return
+        if (!gameController.arePlayersSet()) return
 
         const squares = document.querySelectorAll('.square');
 
