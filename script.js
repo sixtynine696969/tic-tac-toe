@@ -87,7 +87,6 @@ const displayController = function() {
     }
 
     announceWinner = (mark) => {
-        const output = document.querySelector('.output');
         output.textContent = `Player ${mark.toUpperCase()} has won!`;
     } 
 
@@ -97,8 +96,6 @@ const displayController = function() {
     }
 
     clearDisplay = () => {
-        const squares = document.querySelectorAll('.square');
-
         squares.forEach(square => {
             square.removeAttribute('style');
         })
