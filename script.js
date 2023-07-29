@@ -34,46 +34,20 @@ const Player = function(name, mark) {
     return { getName, getMark };
 }
 
-/* ----------------------------------------------------------------- */
-
-// player1 = Player('john', 'x')
-// player2  = Player('joe', 'o')
-
-// gameBoard.addMark(0, 'x')
-// gameBoard.addMark(2, 'o')
-// gameBoard.addMark(6, 'x')
-
-// const squares = document.querySelectorAll('.square');
-
-// squares.forEach(square => {
-//     const index = square.getAttribute('data-board-index')
-//     const board = gameBoard.getBoard();
-
-//     if (!board[index] || square.style['background-image']) return;
-//     if (board[index] === 'x') {
-//         square.style['background-image'] = "url(images/mark-x.png)";
-//     } else {
-//         square.style['background-image'] = "url(images/mark-o.png)";
-//     }
-
-// })
-
-/* ----------------------------------------------------------------- */
-
 const displayController = function() {
 
-    // const squares = document.querySelectorAll('.square');
+    drawMark = (index, mark) => {
+        const square = document.querySelector(`.square[data-board-index="${index}"`)
+        square.style['background-image'] = `url(images/mark-${mark}.png)`;
+    }
 
-    // squares.forEach(square => {
-    //     square.addEventListener('click', e => {
-    //         if (square.style['background-image']) return;
+    clearDisplay = () => {
+        const squares = document.querySelectorAll('.square');
 
-    //         square.style['background-image'] = "url(images/mark-o.png)";
-    //         // square.removeAttribute('style')
-    //     })
-    // })
+        squares.forEach(square => {
+            square.removeAttribute('style');
+        })
+    }
+
+    return { drawMark, clearDisplay }
 }();
-
-const gameController = function() {
-    
-}
