@@ -87,7 +87,7 @@ const displayController = function() {
     const output = document.querySelector('.output');
     const restartBtn = document.querySelector('.restart button');
 
-    updateTurn = () => {
+    announceTurn = () => {
         output.textContent = `Player ${gameController.getCurrentPlayer().getMark().toUpperCase()}'s turn!`
     }
 
@@ -112,7 +112,7 @@ const displayController = function() {
 
     handleRestartBtn = () => {
         gameController.clearBoard();
-        addEventsForDrawing();
+        addListenersToSquares();
         hideRestartBtn();
     }
 
@@ -147,7 +147,7 @@ const displayController = function() {
         gameController.addMark(index, playerMark);
         
         gameController.changeCurrentPlayer();
-        updateTurn();
+        announceTurn();
 
         gameController.incrementNumOfMoves();
 
@@ -161,21 +161,21 @@ const displayController = function() {
             const winningCombo = gameController.getWinningCombo(playerMark);
             darkenWinningFileds(winningCombo);
 
-            removeEventsForDrawing();
+            removeListenersFromSquares();
             announceWinner(playerMark);
             displayRestartBtn();
             gameController.changeStartingPlayer();
         }
     }
 
-    removeEventsForDrawing = () => {
+    removeListenersFromSquares = () => {
         squares.forEach(square => {
             square.removeEventListener('click', handleSquareSelect);
         })
     }
 
-    addEventsForDrawing = () => {
-        updateTurn();
+    addListenersToSquares = () => {
+        announceTurn();
         if (!gameController.arePlayersSet()) return
 
         const squares = document.querySelectorAll('.square');
@@ -186,8 +186,8 @@ const displayController = function() {
     };
 
     init = function() {
-        addEventsForDrawing();
+        addListenersToSquares();
     }();
 
-    return { drawMark, clearDisplay, addEventsForDrawing }
+    return { drawMark, clearDisplay, addListenersToSquares }
 }();
